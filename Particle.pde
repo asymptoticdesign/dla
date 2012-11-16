@@ -4,36 +4,36 @@ class Particle {
   float rad;
   boolean stuck = false;
   
-  Particle(float _posX, float _posY, float maximumRadius) {
+  Particle(float _posX, float _posY, float maximumRadius, float minimumRadius) {
     pos_x = _posX;
     pos_y = _posY;
-    rad = Math.random(0,maximumRadius);
+    rad = random(0,maximumRadius-minimumRadius) + minimumRadius;
   }
 
-  void diffuse() {
+  void diffuse(float maxR) {
     if (!stuck) {
-      float probability = Math.floor(Math.random(0,4));
+      int probability = floor(random(0,4));
       switch(probability) {
       case 0:
-        pos_x += Math.random();
+        pos_x += random(0,1);
         break;
       case 1:
-        pos_x -= Math.random();
+        pos_x -= random(0,1);
         break;
       case 2:
-        pos_y += Math.random();
+        pos_y += random(0,1);
         break;
       case 3:
-        pos_y -= Math.random();
+        pos_y -= random(0,1);
         break;
       }
     }
   
     float Rsq = (pos_x - width/2)*(pos_x - width/2) + (pos_y - height/2)*(pos_y - height/2);
     if (Rsq >= 2*maxR*maxR) {
-      float theta = Math.random(0,TWO_PI);
-      pos_x = Math.floor(maxR*Math.cos(theta)) + width/2;
-      pos_y = Math.floor(maxR*Math.sin(theta)) + height/2;
+      float theta = random(0,TWO_PI);
+      pos_x = floor(maxR*cos(theta)) + width/2;
+      pos_y = floor(maxR*sin(theta)) + height/2;
     }
   }
 
@@ -49,4 +49,3 @@ class Particle {
     ellipse(pos_x,pos_y,rad,rad);
   }
 }
-    

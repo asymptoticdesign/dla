@@ -15,20 +15,59 @@
 //  Of course, the conditions may be waived with permission from the author.
 
 //-----------------Globals
-
+ArrayList particleList;
+Grid particleGrid;
+float maxRad = 10;
+float minRad = 2;
+float maxEnclosingRad = 3*maxRad;
+Particle currentParticle;
 
 //-----------------Setup
 void setup() {
-  size(1024,683);
-  //size(550,368);
-  //load image
-  sourceImage=loadImage("leaves2.jpg");
-  image(sourceImage,0,0);
+  background(0);
+  stroke(255);
+  noFill();
+  size(600,600);
+  particleGrid = new Grid(25,width,height);
+  particleList = new ArrayList();
+  particleList.add(new Particle(width/2,height/2,maxRad,minRad));
+  currentParticle = (Particle)particleList.get(0);
+  currentParticle.stuck = true;
+  currentParticle.render();
+  particleGrid.addParticle(currentParticle);
 }
 
 //-----------------Main Loop
 void draw() {
- 
+  if (maxEnclosingRad < width/2) {
+    while(!currentParticle.stuck) {
+      currentParticle.diffuse(maxEnclosingRad);
+      int[] centralBins = particleGrid.getBinNumbers(currentParticle.pos_x,currentParticle.pos_y);
+      println("Checking Bins " + centralBins[0] + ' ' + centralBins[1]);
+      for(int i = -1; i < 2; i++) {
+        for(int j = -1; j < 2; j++) {
+          ArrayList<Particle> neighboringParticles = particleGrid.getParticles(centralBins[0]+i,centralBins[1]+j);
+          println("Number of particles in Bin: " + neighboringParticles.size());
+          for(int k = 0; k < neighboringParticles.size(); k++) {
+            currentParticle.intersect(neighboringParticles.get(k));
+            if(currentParticle.stuck) {
+              break;
+            }
+          }
+        }
+      }
+    }
+    //draw particle
+    currentParticle.render();
+    particleGrid.addParticle(currentParticle);
+    //determine new maximum enclosing radius
+    float currentDistance = dist(width/2,height/2,currentParticle.pos_x,currentParticle.pos_y) + currentParticle.rad;
+    maxEnclosingRad = max(currentDistance,maxEnclosingRad);
+    //create new particle
+    float theta = random(0,TWO_PI);
+    currentParticle = new Particle(floor(maxEnclosingRad*cos(theta)) + width/2, floor(maxEnclosingRad*sin(theta)) + height/2, maxRad, minRad);
+    particleList.add(currentParticle);
+  }
 }
 
 //-----------------Defined Functions
