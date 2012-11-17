@@ -27,7 +27,7 @@ void setup() {
   background(0);
   stroke(255);
   noFill();
-  size(600,600);
+  size(1200,900);
   particleGrid = new Grid(25,width,height);
   particleList = new ArrayList();
   particleList.add(new Particle(width/2,height/2,maxRad,minRad));
@@ -43,11 +43,9 @@ void draw() {
     while(!currentParticle.stuck) {
       currentParticle.diffuse(maxEnclosingRad);
       int[] centralBins = particleGrid.getBinNumbers(currentParticle.pos_x,currentParticle.pos_y);
-      println("Checking Bins " + centralBins[0] + ' ' + centralBins[1]);
       for(int i = -1; i < 2; i++) {
         for(int j = -1; j < 2; j++) {
           ArrayList<Particle> neighboringParticles = particleGrid.getParticles(centralBins[0]+i,centralBins[1]+j);
-          println("Number of particles in Bin: " + neighboringParticles.size());
           for(int k = 0; k < neighboringParticles.size(); k++) {
             currentParticle.intersect(neighboringParticles.get(k));
             if(currentParticle.stuck) {

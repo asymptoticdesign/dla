@@ -38,8 +38,10 @@ class Particle {
   }
 
   void intersect(Particle testParticle) {
-    float radSum = (rad + testParticle.rad)*(rad + testParticle.rad);
-    float centralDistance = (pos_x - testParticle.pos_x)*(pos_x - testParticle.pos_x) + (pos_y - testParticle.pos_y)*(pos_y - testParticle.pos_y);
+    float radSum = (rad + testParticle.rad);
+    float centralDistance = sqrt((pos_x - testParticle.pos_x)*(pos_x - testParticle.pos_x) + (pos_y - testParticle.pos_y)*(pos_y - testParticle.pos_y));
+    //println("Radial Sum: " + radSum);
+    //println("Central Distance: " + centralDistance);
     if (centralDistance <= radSum) {
       stuck = true;
     }
