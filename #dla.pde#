@@ -11,15 +11,22 @@ ArrayList particleList;
 Grid particleGrid;
 float maxRad = 10;
 float minRad = 2;
-float maxEnclosingRad;
+float maxEnclosingRad = 3*maxRad;
 Particle currentParticle;
 
 //-----------------Setup
 void setup() {
+  background(0);
   stroke(255);
   noFill();
-  size(400,400);
-  reset();
+  size(600,600);
+  particleGrid = new Grid(25,width,height);
+  particleList = new ArrayList();
+  particleList.add(new Particle(width/2,height/2,maxRad,minRad));
+  currentParticle = (Particle)particleList.get(0);
+  currentParticle.stuck = true;
+  currentParticle.render();
+  particleGrid.addParticle(currentParticle);
 }
 
 //-----------------Main Loop
@@ -52,19 +59,9 @@ void draw() {
     particleList.add(currentParticle);
   }
   else {
-    reset();
+    background(0);
   }
 }
 
 //-----------------Defined Functions
-void reset() {
-  background(0);
-  maxEnclosingRad = 3*maxRad;
-  particleGrid = new Grid(20,width,height);
-  particleList = new ArrayList();
-  particleList.add(new Particle(width/2,height/2,maxRad,minRad));
-  currentParticle = (Particle)particleList.get(0);
-  currentParticle.stuck = true;
-  currentParticle.render();
-  particleGrid.addParticle(currentParticle);
-}
+
