@@ -44,6 +44,7 @@ class Particle {
     //println("Central Distance: " + centralDistance);
     if (centralDistance <= radSum) {
       stuck = true;
+      line(pos_x,pos_y,testParticle.pos_x,testParticle.pos_y);
     }
   }
   
