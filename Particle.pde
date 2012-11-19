@@ -30,7 +30,7 @@ class Particle {
     }
   
     float Rsq = (pos_x - width/2)*(pos_x - width/2) + (pos_y - height/2)*(pos_y - height/2);
-    if (Rsq >= 2*maxR*maxR) {
+    if (Rsq >= 1.5*maxR*maxR) {
       float theta = random(0,TWO_PI);
       pos_x = floor(maxR*cos(theta)) + width/2;
       pos_y = floor(maxR*sin(theta)) + height/2;
@@ -40,15 +40,14 @@ class Particle {
   void intersect(Particle testParticle) {
     float radSum = (rad + testParticle.rad);
     float centralDistance = sqrt((pos_x - testParticle.pos_x)*(pos_x - testParticle.pos_x) + (pos_y - testParticle.pos_y)*(pos_y - testParticle.pos_y));
-    //println("Radial Sum: " + radSum);
-    //println("Central Distance: " + centralDistance);
     if (centralDistance <= radSum) {
       stuck = true;
       line(pos_x,pos_y,testParticle.pos_x,testParticle.pos_y);
     }
   }
   
-  void render() {
+  void render(float strokeHue) {
+    stroke(strokeHue,1.0,1.0);
     ellipse(pos_x,pos_y,rad,rad);
   }
 }
