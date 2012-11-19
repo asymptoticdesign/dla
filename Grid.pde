@@ -20,6 +20,7 @@ class Grid {
   ArrayList<Particle> particlesInBin = particleBuckets[clamp(binX, 0, noBinsX - 1)][clamp(binY, 0, noBinsY - 1)];
   return particlesInBin;
  }
+ 
  int[] getBinNumbers(float pos_x, float pos_y) {
    //given a particle's position, return the bin number that it is currently in.
    int indexX = floor(pos_x / binSize);
