@@ -47,6 +47,6 @@ class Particle {
   
   void render(float strokeHue) {
     stroke(strokeHue,1.0,1.0);
-    points(pos_x,pos_y);
+    point(pos_x,pos_y);
   }
 }
