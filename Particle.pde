@@ -48,6 +48,6 @@ class Particle {
   }
   
   void render() {
-    ellipse(pos_x,pos_y,2*rad,2*rad);
+    ellipse(pos_x,pos_y,rad,rad);
   }
 }
