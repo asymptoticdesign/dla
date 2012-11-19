@@ -17,8 +17,8 @@
 //-----------------Globals
 ArrayList particleList;
 Grid particleGrid;
-float maxRad = 0;
-float minRad = 0;
+float maxRad = 1;
+float minRad = 1;
 float maxEnclosingRad = 3*maxRad;
 Particle currentParticle;
 float strokeHue = random(TWO_PI);
