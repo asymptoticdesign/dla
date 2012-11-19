@@ -3,30 +3,32 @@ class Particle {
   float pos_y;
   float rad;
   boolean stuck = false;
+  int mode;
   
-  Particle(float _posX, float _posY, float maximumRadius, float minimumRadius) {
+  Particle(float _posX, float _posY, float maximumRadius, float minimumRadius, int _mode) {
     pos_x = _posX;
     pos_y = _posY;
     rad = random(0,maximumRadius-minimumRadius) + minimumRadius;
+    mode = _mode;
   }
 
-  void diffuse(float maxR) {
+  void diffuse(float maxR, float stepSizeA, float stepSizeB) {
     if (!stuck) {
-      int probability = floor(random(0,4));
-      switch(probability) {
+      switch(mode) {
       case 0:
-        pos_x += random(0,1);
+        pos_x += random(-1,1);
+	pos_y += random(-1,1);
         break;
+	
       case 1:
-        pos_x -= random(0,1);
+        float thetaCenter = atan2(pos_y-height/2,pos_x-width/2);
+        println(thetaCenter);
+	pos_x += -1*stepSizeA*sin(thetaCenter) - stepSizeB*cos(thetaCenter);
+	pos_y += stepSizeA*cos(thetaCenter) - stepSizeB*sin(thetaCenter);
         break;
-      case 2:
-        pos_y += random(0,1);
-        break;
-      case 3:
-        pos_y -= random(0,1);
-        break;
+        
       }
+
     }
   
     float Rsq = (pos_x - width/2)*(pos_x - width/2) + (pos_y - height/2)*(pos_y - height/2);

@@ -1,1 +1,1 @@
-This is the readme.
+A diffusion-limited aggregation simulation where color is proportional to the age of the particles.  Particles are represented by bubbles which diffuse via a random walk throughout the grid; when a diffusing bubble touches an aggregated bubble, the diffusing bubble attaches itself to the aggregate.

@@ -1,5 +1,5 @@
 //  Title: Diffusion Limited Aggregation
-//  Description: Tiles the entire image with quad-symmetric tiles sampled from the input image to create a wallpaper.
+//  Description: Diffusion-Limited Aggregation algorithm where each particle is a 'bubble' of random size.  Color corresponds to age of particles.
 //  Date Started: Nov 2012
 //  Last Modified: Nov 2012
 //  http://www.asymptoticdesign.org/
@@ -22,6 +22,7 @@ float minRad = 2;
 float maxEnclosingRad = 3*maxRad;
 Particle currentParticle;
 float strokeHue = random(TWO_PI);
+int initialMode = 1;
 
 //-----------------Setup
 void setup() {
@@ -35,10 +36,10 @@ void setup() {
 
 //-----------------Main Loop
 void draw() {
-  if (maxEnclosingRad < height/2) {
+  if (maxEnclosingRad < 1.5*height/2) {
     strokeHue = (strokeHue + TWO_PI / 1800) % TWO_PI;
     while(!currentParticle.stuck) {
-      currentParticle.diffuse(maxEnclosingRad);
+      currentParticle.diffuse(maxEnclosingRad,0.25,1.0);
       int[] centralBins = particleGrid.getBinNumbers(currentParticle.pos_x,currentParticle.pos_y);
       for(int i = -1; i <= 1; i++) {
         for(int j = -1; j <= 1; j++) {
@@ -57,10 +58,10 @@ void draw() {
     particleGrid.addParticle(currentParticle);
     //determine new maximum enclosing radius
     float currentDistance = dist(width/2,height/2,currentParticle.pos_x,currentParticle.pos_y) + currentParticle.rad;
-    maxEnclosingRad = max(1.2*currentDistance,maxEnclosingRad);
+    maxEnclosingRad = max(1.5*currentDistance,maxEnclosingRad);
     //create new particle
     float theta = random(0,TWO_PI);
-    currentParticle = new Particle(floor(maxEnclosingRad*cos(theta)) + width/2, floor(maxEnclosingRad*sin(theta)) + height/2, maxRad, minRad);
+    currentParticle = new Particle(floor(maxEnclosingRad*cos(theta)) + width/2, floor(maxEnclosingRad*sin(theta)) + height/2, maxRad, minRad,initialMode);
     particleList.add(currentParticle);
   }
   else {
@@ -75,7 +76,7 @@ void reset() {
   maxEnclosingRad = 3*maxRad; 
   particleGrid = new Grid(15,width,height);
   particleList = new ArrayList();
-  particleList.add(new Particle(width/2,height/2,maxRad,minRad));
+  particleList.add(new Particle(width/2,height/2,maxRad,minRad,initialMode));
   currentParticle = (Particle)particleList.get(0);
   currentParticle.stuck = true;
   currentParticle.render(strokeHue);
