@@ -42,12 +42,11 @@ class Particle {
     float centralDistance = sqrt((pos_x - testParticle.pos_x)*(pos_x - testParticle.pos_x) + (pos_y - testParticle.pos_y)*(pos_y - testParticle.pos_y));
     if (centralDistance <= radSum) {
       stuck = true;
-      line(pos_x,pos_y,testParticle.pos_x,testParticle.pos_y);
     }
   }
   
   void render(float strokeHue) {
     stroke(strokeHue,1.0,1.0);
-    ellipse(pos_x,pos_y,rad,rad);
+    ellipse(pos_x,pos_y,2*rad,2*rad);
   }
 }
