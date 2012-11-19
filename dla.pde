@@ -1,10 +1,10 @@
 //  Title: Diffusion Limited Aggregation
-//  Description: 
+//  Description: Draw structures produced from a diffusion-limited aggregation algorithm.  Particles are separated by gaps and connected by lines between their centers.
 //  Date Started: Nov 2012
 //  Last Modified: Nov 2012
 //  http://www.asymptoticdesign.org/
 //
-//
+//  
 
 //-----------------Globals
 ArrayList particleList;

@@ -42,7 +42,6 @@ class Particle {
     float centralDistance = sqrt((pos_x - testParticle.pos_x)*(pos_x - testParticle.pos_x) + (pos_y - testParticle.pos_y)*(pos_y - testParticle.pos_y));
     if (centralDistance <= radSum) {
       stuck = true;
-      line(pos_x,pos_y,testParticle.pos_x,testParticle.pos_y);
     }
   }
   
