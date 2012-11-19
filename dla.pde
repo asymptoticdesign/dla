@@ -65,6 +65,7 @@ void draw() {
   }
   else {
     reset();
+    saveFrame("dla-bubbles-####.png");
   }
 }
 
